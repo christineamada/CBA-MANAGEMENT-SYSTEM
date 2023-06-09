@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+{% block title %} Course Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <!--Table-->
+{% if user.is_authenticated and user.is_superuser %}
+ <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Add Course</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <input class="btn btn-success btn-block" type="submit" value="Add Course">
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-dark">
+                    <tr class="text-white">
+                        <th scope="col">Course ID</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">For ABM Strand Graduates</th>
+                        <th scope="col">For Non-ABM Strand Graduates</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td>{{ course.course_id }}</td>
+                        <td>{{ course.course_name }}</td>
+                        <td><a href="{{ course.link }}">{{ course.link }}</a></td>
+                        <td><a href="{{ course.link2 }}">{{ course.link }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+        <table class="table bg-white">
+            <thead class="bg-dark">
+                <tr class="text-white">
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">For ABM Strand Graduates</th>
+                    <th scope="col">For Non-ABM Strand Graduates</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course.course_id }}</td>
+                    <td>{{ course.course_name }}</td>
+                    <td><a href="{{ course.link }}">{{ course.link }}</a></td>
+                    <td><a href="{{ course.link2 }}">{{ course.link }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+
+
+<!--End Table-->
+
+{% endblock %}
+

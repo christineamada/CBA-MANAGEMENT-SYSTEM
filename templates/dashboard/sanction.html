@@ -1,0 +1,90 @@
+{% extends 'partials/base.html' %}
+{% block title %} Sanction Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <!--Table-->
+ {% if user.is_authenticated and user.is_superuser %}
+ <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Add Sanction</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input class="btn btn-success btn-block" type="submit" value="Add Sanction">
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-dark">
+                    <tr class="text-white">
+                        <th scope="col">Student</th>
+                        <th scope="col">Event</th>
+                        <th scope="col">Merit Points</th>
+                        <th scope="col">Demerit Points</th>
+                        <th scope="col">Sanction Points</th>
+                        <th scope="col">School Year</th>
+                        <th scope="col">Actions</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sanction in sanctions %}
+                    <tr>
+                        <td>{{ sanction.student }}</td>
+                        <td>{{ sanction.event }}</td>
+                        <td>{{ sanction.merit }}</td>
+                        <td>{{ sanction.demerit }}</td>
+                        <td>{{ sanction.sanction }}</td>
+                        <td>{{ sanction.schoolyear }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-sanction-update' sanction.id %}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-sanction-delete' sanction.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% else %}
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+    <table class="table bg-white">
+        <thead class="bg-dark">
+            <tr class="text-white">
+                <th scope="col">Student</th>
+                <th scope="col">Event</th>
+                <th scope="col">Merit Points</th>
+                <th scope="col">Demerit Points</th>
+                <th scope="col">Sanction Points</th>
+                <th scope="col">School Year</th>                     
+            </tr>
+        </thead>
+        <tbody>
+            {% for sanction in sanctions %}
+            <tr>
+                <td>{{ sanction.student }}</td>
+                <td>{{ sanction.event }}</td>
+                <td>{{ sanction.merit }}</td>
+                <td>{{ sanction.demerit }}</td>
+                <td>{{ sanction.sanction }}</td>
+                <td>{{ sanction.schoolyear }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+<!--End Table-->
+{% endif %}
+
+{% endblock %}
+

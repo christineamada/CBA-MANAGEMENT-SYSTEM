@@ -1,0 +1,42 @@
+{% extends 'partials/base.html' %}
+{% block title %} Login Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+{% load static %}
+<style>
+    figure.text-center {
+        margin: 30px;
+        position: relative;
+    }
+    
+    body{
+    background-image: url('{% static "img/cba_building.jpg" %}');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: black;
+    }
+
+</style> 
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3 bg-white">
+                    <h3>Login Page</h3>
+                    <hr>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                         <input class="btn btn-success" type="submit" value="Login">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% include 'partials/footer.html' %}
+{% endblock %}

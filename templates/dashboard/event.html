@@ -1,0 +1,91 @@
+{% extends 'partials/base.html' %}
+{% block title %} Event Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <!--Table-->
+ {% if user.is_authenticated and user.is_superuser %}
+ <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Add Event</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <input class="btn btn-success btn-block" type="submit" value="Add Event">
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-dark">
+                    <tr class="text-white">
+                        <th scope="col">Event ID</th>
+                        <th scope="col">Event Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">School Year</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr>
+                        <td>{{ event.event_id}}</td>
+                        <td>{{ event.event_name }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>{{ event.description }}</td>
+                        <td>{{ event.schoolyear }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-event-update' event.id %}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-event-delete' event.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+        <table class="table bg-white">
+            <thead class="bg-dark">
+                <tr class="text-white">
+                    <th scope="col">Event ID</th>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">School Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.event_id}}</td>
+                    <td>{{ event.event_name }}</td>
+                    <td>{{ event.date }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.schoolyear }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endif %}
+
+
+<!--End Table-->
+
+{% endblock %}
+

@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+{% block title %}CBA Management System{% endblock %}
+
+{% block content %}
+{% include 'partials/topside.html' %}
+{% load static %}
+
+<style>
+    body{
+    background-image: url('{% static "img/cba_building.jpg" %}');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: black;
+    }
+</style>
+
+{% include 'partials/footer.html' %}
+{% endblock %}
+
+

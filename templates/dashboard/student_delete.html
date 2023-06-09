@@ -1,0 +1,25 @@
+{% extends 'partials/base.html' %}
+{% block title %} Student Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-6 offset-md-4">
+            <div class="border bg-white p-3">
+                <h4>Delete Student</h4>
+                <hr>
+            <div class="alert alert-danger">
+                <h4>Are you sure you want to delete the student?</h4>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <a class='btn btn-secondary' href="{% url 'dashboard-student' %}">Cancel</a>
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

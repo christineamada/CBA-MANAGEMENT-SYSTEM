@@ -1,0 +1,95 @@
+{% extends 'partials/base.html' %}
+{% block title %} Transaction Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <!--Table-->
+{% if user.is_authenticated and user.is_superuser %}
+ <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Add Transaction</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <input class="btn btn-success btn-block" type="submit" value="Add Transaction">
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-dark">
+                    <tr class="text-white">
+                        <th scope="col">Student</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Payment Method</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">School Year</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.student }}</td>
+                        <td>{{ transaction.date }}</td>
+                        <td>{{ transaction.status }}</td>
+                        <td>{{ transaction.payment_mode }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.schoolyear }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-transaction-update' transaction.id %}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-transaction-delete' transaction.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+    <table class="table bg-white">
+        <thead class="bg-dark">
+            <tr class="text-white">
+                <th scope="col">Student</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Description</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.student }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.status }}</td>
+                <td>{{ transaction.payment_mode }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endif %}
+
+
+
+<!--End Table-->
+
+{% endblock %}

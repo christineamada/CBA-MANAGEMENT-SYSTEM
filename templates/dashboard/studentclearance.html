@@ -1,0 +1,82 @@
+{% extends 'partials/base.html' %}
+{% block title %} Course Page {% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+ <!--Table-->
+ {% if user.is_authenticated and user.is_superuser %}
+ <div class="container">
+    <div class="row my-4">
+        <div class="col-md-4">
+            <div class="border bg-white p-3">
+                <h4>Add Clearance</h4>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    
+                    <input class="btn btn-success btn-block" type="submit" value="Add Clearance">
+
+                </form>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <table class="table bg-white">
+                <thead class="bg-dark">
+                    <tr class="text-white">
+                        <th scope="col">Student</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">School Year</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for studentclearance in studentclearances %}
+                    <tr>
+                        <td>{{ studentclearance.student }}</td>
+                        <td>{{ studentclearance.status }}</td>
+                        <td>{{ studentclearance.schoolyear }}</td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{% url 'dashboard-clearance-update' studentclearance.id %}">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="{% url 'dashboard-clearance-delete' studentclearance.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row my-4">
+    <div class="col-md-8 mx-auto">
+        <table class="table bg-white">
+            <thead class="bg-dark">
+                <tr class="text-white">
+                    <th scope="col">Student</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">School Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for studentclearance in studentclearances %}
+                <tr>
+                    <td>{{ studentclearance.student }}</td>
+                    <td>{{ studentclearance.status }}</td>
+                    <td>{{ studentclearance.schoolyear }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+
+
+<!--End Table-->
+
+{% endblock %}
+

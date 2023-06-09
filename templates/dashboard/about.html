@@ -1,0 +1,42 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block title %}About CBA{% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+    figure.text-center {
+      margin: 30px;
+    }
+    
+    blockquote {
+      margin: 15px;
+    }
+
+    figure.text-center {
+      margin: 30px;
+      position: relative;
+    }
+    
+    body{
+    background-image: url('{% static "img/cba_building.jpg" %}');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: black;
+  }
+</style>
+
+<figure class="text-center text-white">
+    <p class="h2">About the CBA Management System</p>
+
+    <blockquote class="blockquote">
+      <p> A system where the council can manage the transactions easily, 
+        <br> and students will be informed upon their sanctions points. </p>
+    </blockquote>
+</figure>
+
+{% include 'partials/footer.html' %}
+{% endblock %}
+

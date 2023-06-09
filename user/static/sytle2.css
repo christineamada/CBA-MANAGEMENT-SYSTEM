@@ -1,0 +1,8 @@
+body{
+    background-image: url('/static/images/cba_building.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: black;
+}

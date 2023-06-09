@@ -1,0 +1,40 @@
+{% extends 'partials/base.html' %}
+{% block title %} Logout Page{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% load static %}
+<style>
+    figure.text-center {
+        margin: 30px;
+        position: relative;
+    }
+    
+    body{
+    background-image: url('{% static "img/cba_building.jpg" %}');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    color: black;
+    }
+</style> 
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="border p-3 bg-white">
+                <h3>Logout Page</h3>
+                <hr>
+                <div class="alert alert-danger">
+                    <h4>You have been logged out</h4>
+                </div>
+                <a href="{% url 'user-login' %}">Login here</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% include 'partials/footer.html' %}
+{% endblock %}
